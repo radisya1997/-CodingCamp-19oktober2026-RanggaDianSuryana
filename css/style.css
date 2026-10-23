@@ -1,0 +1,470 @@
+/* ============================================================
+   style.css  –  Personal Dashboard
+   Challenges implemented: Light/Dark mode, Custom name, Change Pomodoro time
+   ============================================================ */
+
+/* ---------- CSS Custom Properties (theme tokens) ---------- */
+:root {
+  --bg:           #f0f2f5;
+  --surface:      #ffffff;
+  --surface-alt:  #f7f8fa;
+  --border:       #e0e3e8;
+  --text-primary: #1a1d23;
+  --text-muted:   #6b7280;
+  --accent:       #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #eef2ff;
+  --danger:       #ef4444;
+  --danger-hover: #dc2626;
+  --success:      #22c55e;
+  --radius:       12px;
+  --radius-sm:    6px;
+  --shadow:       0 2px 12px rgba(0,0,0,.08);
+  --transition:   .2s ease;
+}
+
+[data-theme="dark"] {
+  --bg:           #0f1117;
+  --surface:      #1c1f2e;
+  --surface-alt:  #252839;
+  --border:       #2e3147;
+  --text-primary: #e8eaf0;
+  --text-muted:   #8b90a7;
+  --accent:       #6366f1;
+  --accent-hover: #818cf8;
+  --accent-light: #1e2040;
+  --danger:       #f87171;
+  --danger-hover: #ef4444;
+  --shadow:       0 2px 16px rgba(0,0,0,.4);
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Header / Greeting ---------- */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px 24px;
+  box-shadow: var(--shadow);
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.datetime {
+  font-size: .9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.greeting {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.display-name {
+  font-size: 1.05rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), opacity var(--transition), transform .1s;
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(.97); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--border); }
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover { background: var(--danger-hover); }
+
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.btn-sm { padding: 5px 10px; font-size: .8rem; }
+
+.text-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: .8rem;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition);
+}
+.text-btn:hover { color: var(--accent); }
+
+.icon-btn {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+.icon-btn:hover { background: var(--border); }
+
+/* ---------- Main Grid ---------- */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 28px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: var(--text-primary);
+  letter-spacing: .01em;
+}
+
+/* ---------- Focus Timer ---------- */
+.timer-settings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+
+.timer-settings input[type="number"] {
+  width: 60px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  font-size: .85rem;
+  text-align: center;
+}
+
+.timer-display {
+  text-align: center;
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  letter-spacing: .02em;
+  margin: 8px 0 16px;
+}
+
+.timer-progress-wrap {
+  background: var(--surface-alt);
+  border-radius: 99px;
+  height: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.timer-progress {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width .5s linear;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- To-Do List ---------- */
+.todo-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.todo-input-row input,
+.links-input-row input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  font-size: .875rem;
+  transition: border-color var(--transition);
+}
+.todo-input-row input:focus,
+.links-input-row input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.todo-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.task-count {
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
+#sortSelect {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  font-size: .8rem;
+  cursor: pointer;
+}
+
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.todo-list::-webkit-scrollbar { width: 4px; }
+.todo-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), opacity var(--transition);
+  animation: fadeIn .2s ease;
+}
+
+.todo-item.done {
+  opacity: .6;
+}
+
+.todo-item.done .todo-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: .875rem;
+  word-break: break-word;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.todo-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  font-size: .8rem;
+  color: var(--text-muted);
+  transition: background var(--transition), color var(--transition);
+}
+.todo-actions button:hover { background: var(--border); color: var(--text-primary); }
+.todo-actions .delete-btn:hover { color: var(--danger); }
+
+/* ---------- Quick Links ---------- */
+.links-input-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.links-input-row input[type="text"] { min-width: 90px; max-width: 120px; }
+.links-input-row input[type="url"]  { flex: 1; min-width: 150px; }
+
+.links-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 99px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--accent);
+  transition: background var(--transition);
+  animation: fadeIn .2s ease;
+}
+.link-chip a { color: var(--accent); }
+.link-chip a:hover { text-decoration: underline; }
+
+.link-chip .remove-link {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: .75rem;
+  padding: 0 2px;
+  line-height: 1;
+  border-radius: 50%;
+  transition: color var(--transition);
+}
+.link-chip .remove-link:hover { color: var(--danger); }
+
+/* ---------- Modals ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 900;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 910;
+}
+
+.modal.hidden,
+.modal-backdrop.hidden { display: none; }
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-box h2 { font-size: 1.1rem; }
+
+.modal-box input {
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  font-size: .9rem;
+  width: 100%;
+}
+.modal-box input:focus { outline: none; border-color: var(--accent); }
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .header         { padding: 16px 18px 20px; }
+  .main-grid      { padding: 16px 14px; gap: 16px; }
+  .timer-controls { gap: 8px; }
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER / GREETING ===== -->
+  <header class="header">
+    <div class="header-top">
+      <div id="datetime" class="datetime"></div>
+      <div class="header-controls">
+        <!-- Challenge: Light / Dark mode -->
+        <button id="themeToggle" class="icon-btn" title="Toggle theme" aria-label="Toggle light/dark mode">🌙</button>
+      </div>
+    </div>
+
+    <!-- Challenge: Custom name in greeting -->
+    <div class="greeting-block">
+      <h1 id="greeting" class="greeting"></h1>
+      <div class="name-row">
+        <span id="displayName" class="display-name"></span>
+        <button id="editNameBtn" class="text-btn" aria-label="Edit your name">✏️ Edit name</button>
+      </div>
+    </div>
+
+    <!-- Name edit modal -->
+    <div id="nameModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="nameModalTitle">
+      <div class="modal-box">
+        <h2 id="nameModalTitle">What's your name?</h2>
+        <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name…" />
+        <div class="modal-actions">
+          <button id="saveNameBtn" class="btn btn-primary">Save</button>
+          <button id="cancelNameBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-grid">
+
+    <!-- ===== FOCUS TIMER ===== -->
+    <section class="card" id="timerCard" aria-labelledby="timerTitle">
+      <h2 id="timerTitle" class="card-title">🍅 Focus Timer</h2>
+
+      <!-- Challenge: Change Pomodoro time -->
+      <div class="timer-settings">
+        <label for="timerDuration">Duration (min):</label>
+        <input id="timerDuration" type="number" min="1" max="120" value="25" aria-label="Timer duration in minutes" />
+        <button id="applyDuration" class="btn btn-secondary btn-sm">Apply</button>
+      </div>
+
+      <div class="timer-display" aria-live="polite" aria-atomic="true">
+        <span id="timerDisplay">25:00</span>
+      </div>
+
+      <div class="timer-progress-wrap">
+        <div id="timerProgress" class="timer-progress" style="width:100%"></div>
+      </div>
+
+      <div class="timer-controls">
+        <button id="startBtn"  class="btn btn-primary"   aria-label="Start timer">▶ Start</button>
+        <button id="stopBtn"   class="btn btn-secondary" aria-label="Stop timer" disabled>⏸ Pause</button>
+        <button id="resetBtn"  class="btn btn-secondary" aria-label="Reset timer">↺ Reset</button>
+      </div>
+    </section>
+
+    <!-- ===== TO-DO LIST ===== -->
+    <section class="card" id="todoCard" aria-labelledby="todoTitle">
+      <h2 id="todoTitle" class="card-title">✅ To-Do List</h2>
+
+      <div class="todo-input-row">
+        <input id="todoInput" type="text" placeholder="Add a new task…" maxlength="120" aria-label="New task" />
+        <button id="addTaskBtn" class="btn btn-primary" aria-label="Add task">+ Add</button>
+      </div>
+
+      <!-- Challenge: Sort tasks -->
+      <div class="todo-toolbar">
+        <span class="task-count" id="taskCount"></span>
+        <select id="sortSelect" aria-label="Sort tasks">
+          <option value="default">Sort: Default</option>
+          <option value="asc">Sort: A → Z</option>
+          <option value="desc">Sort: Z → A</option>
+          <option value="done">Sort: Done last</option>
+        </select>
+      </div>
+
+      <ul id="todoList" class="todo-list" aria-label="Task list" aria-live="polite"></ul>
+    </section>
+
+    <!-- ===== QUICK LINKS ===== -->
+    <section class="card" id="linksCard" aria-labelledby="linksTitle">
+      <h2 id="linksTitle" class="card-title">🔗 Quick Links</h2>
+
+      <div class="links-input-row">
+        <input id="linkName" type="text"  placeholder="Label"  maxlength="30"  aria-label="Link label" />
+        <input id="linkUrl"  type="url"   placeholder="https://…" aria-label="Link URL" />
+        <button id="addLinkBtn" class="btn btn-primary" aria-label="Add link">+ Add</button>
+      </div>
+
+      <div id="linksList" class="links-list" aria-label="Quick links" aria-live="polite"></div>
+    </section>
+
+  </main>
+
+  <!-- Edit task modal -->
+  <div id="editModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-box">
+      <h2 id="editModalTitle">Edit Task</h2>
+      <input id="editInput" type="text" maxlength="120" aria-label="Edit task text" />
+      <div class="modal-actions">
+        <button id="saveEditBtn"   class="btn btn-primary">Save</button>
+        <button id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
